@@ -813,8 +813,16 @@ def build_traceability_matrix(df: pd.DataFrame,
             )
             s3_r2 = (
                 f"Prompt and output documented — logged at "
-                f"{llm_results['llm_audit_log']['timestamp']}; "
-                f"model: {llm_results['llm_audit_log']['model']}"
+                f"timestamp: {llm_results['llm_audit_log']['timestamp']} | "
+                f"model: {llm_results['llm_audit_log']['model']} | "
+                f"temperature: {llm_results['llm_audit_log']['temperature']} | "
+                f"guest_type: {llm_results['llm_audit_log']['guest_customer_type']} | "
+                f"room: {llm_results['llm_audit_log']['recommended_room']} | "
+                f"price_eur: {llm_results['llm_audit_log']['dynamic_price_eur']} | "
+                f"hallucination_detected: {llm_results['llm_audit_log']['hallucination_detected']} | "
+                f"hallucination_reasons: {llm_results['llm_audit_log']['hallucination_reasons']} | "
+                f"alerts_fired: {llm_results['llm_audit_log']['alerts_fired']} | "
+                f"final_offer_text: {llm_results['llm_audit_log']['final_offer_text']}"
             )
             s3_r4 = (
                 f"'Why this offer?' transparency card generated — "
@@ -1012,7 +1020,7 @@ def print_traceability_matrix(matrix: dict, scenario: str):
             else:
                 display = str(val)
                 if len(display) > 80:
-                    display = display[:77] + "..."
+                    display = display[:]
                 status = f"  {display}"
             print(f"  [{rj}] {headers[rj]:<28} {status}")
 
